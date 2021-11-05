@@ -60,10 +60,31 @@ namespace FeatureSwitch.Controllers
             httpRequest.Accept = "application/json";
             httpRequest.ContentType = "application/json";
 
+            var data = @"{
+                    ""Email"": ""sydhsn.sh@gmail.com"",
+                    ""FeatureName"": Profile,
+                    ""Enable"": true
+                    }";
+
             FeatureAccess featureAccess = new FeatureAccess();
-            featureAccess.Email = "sydhsn.sh@gmail.com";
-            featureAccess.FeatureName = "Profile";
-            featureAccess.Enable = true;
+            Dictionary<string, string> featureAccessJson = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
+            foreach(var x in featureAccessJson)
+            {
+                
+                if(x.Key == "Email")
+                {
+                    featureAccess.Email = x.Value;
+                }
+                if (x.Key == "FeatureName")
+                {
+                    featureAccess.FeatureName = x.Value;
+                }
+                if (x.Key == "Enable")
+                {
+                    featureAccess.Enable = Boolean.Parse(x.Value);
+                }
+                
+            }
 
             try
             {
